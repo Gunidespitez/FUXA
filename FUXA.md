@@ -67,8 +67,17 @@ def coil():
 threading.Thread(target=coil,daemon=True).start()
 print("Modbus server running on port 5025...")
 StartTcpServer(serv, address=("0.0.0.0", 5028))
+
+![Screenshot from 2025-03-03 17-00-34](https://github.com/user-attachments/assets/6f63f302-ed49-4952-9154-54c8a6d3155f)
+
+
+
 ### WHAT DOES MY SYSTEM DO?
-User clicks the switch in FUXA SCADA → Sends a signal to the Modbus server.
+
+https://github.com/user-attachments/assets/f2fab2f0-7db6-448f-8ccc-048e2f636819
+
+User clicks the sitch in FUXA
+SCADA → Sends a signal to the Modbus server.
 Modbus server updates the coil register (00001) → Changes value from 0 to 1.
 FUXA reads the coil value → If 1, the valve opens and pipes start flowing.
 If user turns the switch OFF → Coil value changes to 0, valve closes, and pipes stop flowing.
@@ -95,4 +104,18 @@ Read and write data to coils (ON/OFF) and registers (numeric values).
 * client.write_register(address, value)
 * Writes a numeric value to a holding register.
 * client.close()
-Closes the connection to the server.
+* Closes the connection to the server.
+## SMART VALVE SYSTEM
+https://github.com/user-attachments/assets/26963173-78bb-4777-962d-162f719119f0
+* Initial Setup
+    - Tank 1 starts full (100L), Tank 2 is empty.
+    - The valve is initially closed (RED).
+    - If the switch is turned ON, the valve opens (GREEN), and water starts flowing from Tank 1 to Tank 2.
+    - As Tank 2 fills up, Tank 1’s level decreases.
+    - When Tank 2 reaches 100L, the valve automatically closes to prevent overflow.
+    -  Tank levels update in real-time on FUXA SCADA.
+    - The graph shows water level trends over time.
+
+## SUMMARY
+The simple valve system uses FUXA SCADA and Python (PyModbus) to control a valve and pipe flow based on a switch. When the switch is turned ON in FUXA, a Modbus command is sent to the Python-based Modbus server, which updates the valve state to open (green) and starts the pipe flow animation. If the switch is turned OFF, the valve closes (red) and the pipe stops flowing. The system uses Modbus coils to store the switch, valve, and pipe flow states, updating them in real time
+
